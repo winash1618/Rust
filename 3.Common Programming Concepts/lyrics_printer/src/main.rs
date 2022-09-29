@@ -13,24 +13,18 @@ fn main() {
 		"Eleven pipers piping",
         "Twelve drummers drumming",
     ];
-    let sing = ["On the", "day of Christmas"];
     let days = [
-        "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven",
+        "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eight", "nineth", "tenth", "eleventh",
         "twelfth",
     ];
-    let love = "My true love gave to me";
-    let mut i = 0;
-    while i < 12 {
-        let mut j : i32 = i;
-		for (i, element) in song.iter().enumerate() {
-			println!("INDEX = {}, element = {}", i, element);
-			if ()
-		}{
-			let element = love[j];
-            println!("{element}");
-            j = j - 1;
-        }
-		println!("");
-		i = i + 1;
-    }
+    for i in 0..12 {
+		println!("On the {} day of Christmas", days[i]);
+		println!("My true love gave to me:");
+		for j in (0..i + 1).rev() {
+			println!("{}", song[j]);
+		}
+		println!();
+	}
 }
+
+
