@@ -30,6 +30,7 @@ fn main() {
     let s = String::from("hello world");
 	let first = first_word(&s);
     let word = second_word(&s); // word will get the value 5
+	// s.clear(); error! Rust disallows the mutable reference in clear and the immutable reference in word from existing at the same time, and compilation fails.
 	println!("{first}");
 	println!("{word}");
     // word still has the value 5 here, but there's no more string that
