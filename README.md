@@ -3,3 +3,6 @@ The Rust programming language helps you write faster, more reliable software. Hi
 
 ## Resources
 - https://doc.rust-lang.org/book/
+- https://www.freecodecamp.org/news/project-euler-problems-in-rust/
+- https://levelup.gitconnected.com/rust-adventures-rust-projects-management-understanding-packages-crates-and-modules-b3bcde2eb1c
+- https://practice.rs/crate-module/crate.html
