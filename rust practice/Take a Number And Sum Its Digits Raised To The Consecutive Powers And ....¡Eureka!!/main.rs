@@ -32,18 +32,18 @@ fn sum_dig_pow(a: u64, b: u64) -> Vec<u64> {
 /*************************** Best Solution *******************************/
 /*************************************************************************/
 
-fn is_eureka(n: u64) -> bool {
-    n.to_string()
-        .chars()
-        .enumerate()
-        .map(|(at, char)| u64::pow(char.to_string().parse::<u64>().unwrap(), at as u32 + 1))
-        .reduce(|accum, item| accum + item)
-        == Some(n)
-}
+// fn is_eureka(n: u64) -> bool {
+//     n.to_string()
+//         .chars()
+//         .enumerate()
+//         .map(|(at, char)| u64::pow(char.to_string().parse::<u64>().unwrap(), at as u32 + 1))
+//         .reduce(|accum, item| accum + item)
+//         == Some(n)
+// }
 
-fn sum_dig_pow(a: u64, b: u64) -> Vec<u64> {
-    (a..=b)
-        .into_iter()
-        .filter(|e| is_eureka(*e))
-        .collect::<Vec<u64>>()
-}
+// fn sum_dig_pow(a: u64, b: u64) -> Vec<u64> {
+//     (a..=b)
+//         .into_iter()
+//         .filter(|e| is_eureka(*e))
+//         .collect::<Vec<u64>>()
+// }
