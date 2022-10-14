@@ -1,37 +1,30 @@
 fn josephus_recursion<T:Clone+Copy>(xs:Vec<T>, k:usize, l:usize) -> Vec<T> {
     let mut vec = Vec::new();
-    if xs.len() >= k
-    {
-        if loc + k < xs.len() - 1
-        {
-            loc = loc + k - 1 - xs.len();
-        }
-        else
-        {
-            loc = loc + k;
-        }
-        vec.push(xs[loc]);
-        xs.remove(loc);
-        if (xs.len() == loc)
-            loc = 0;
-        vec = josephus_recursion(xs, k, loc);
-    }
-    else if xs.len() < k && xs.len() > 0
+	let mut rem = k;
+    if xs.len() > 0
 	{
-		rem = k % xs.len();
-		if loc + rem > xs.len()
+		if (xs.len() < k)
 		{
-			loc = loc + rem - xs.len();
+			rem = k % xs.len();
+		}
+		if loc + rem >= xs.len()
+		{
+			loc += rem - xs.len();
 		}
 		else
 		{
-			loc = loc + k
+			loc += rem - 1;
 		}
 		vec.push(xs[loc]);
 		xs.remove(loc);
-		if (xs.len() == loc)
-			loc = 0;
-		vec = josephus_recursion(xs, k, loc)
+		if xs.len() > 0
+		{
+			if xs.len() == loc
+			{
+				loc = 0;
+			}
+			vec = josephus_recursion(xs, k, loc)
+		}
 	}
 	vec
 }
