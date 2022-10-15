@@ -1,5 +1,3 @@
-
-
 fn hamming(n: usize) -> u64 {
     if n == 1
 	{
@@ -11,17 +9,18 @@ fn hamming(n: usize) -> u64 {
 	vec.push(1);
 	while count <= n
 	{
-		// println!("{:?}", vec);
+		println!("{:?} {}", vec, count);
 		min_value = *vec.iter().min().unwrap() as u64;
-		if vec.contains(&(min_value * 2)) == false
+		let max = u64::MAX;
+		if (max / min_value) >= 2 && vec.contains(&(min_value * 2)) == false
 		{
 			vec.push(min_value * 2);
 		}
-		if vec.contains(&(min_value * 3)) == false
+		if (max / min_value) >= 3 && vec.contains(&(min_value * 3)) == false
 		{
 			vec.push(min_value * 3);
 		}
-		if vec.contains(&(min_value * 5)) == false
+		if (max / min_value) >= 5 && vec.contains(&(min_value * 5)) == false
 		{
 			vec.push(min_value * 5);
 		}
@@ -38,5 +37,13 @@ fn hamming(n: usize) -> u64 {
 
 fn main () {
 	let ham = hamming(5000);
+	// let mut i : u64= 2;
+	// let mut count = 0;
+	// loop
+	// {
+	// 	i = i * 2 as u64;
+	// 	count += 1;
+	// 	println!("{}", count);
+	// }
 	println!("{}", ham);
 }
