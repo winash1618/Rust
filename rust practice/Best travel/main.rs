@@ -4,13 +4,11 @@ fn choose_best_sum(t: i32, k: i32, ls: &Vec<i32>) -> i32 {
 	let mut d = 0;
 	while (i + k - 1) < lst.len() as i32
 	{
-		println!("{:?} {} {} {}", lst, d, k, t);
 		let mut dis = ls[i as usize];
 		if k > 1
 		{
 			let save_one = lst[i as usize];
 			dis = choose_best_sum(t - save_one, k - 1, &(lst[((i + 1) as usize)..]).to_vec());
-			println!("{} {}", dis, save_one);
 			if dis > 0
 			{
 				dis = save_one + dis;
@@ -43,3 +41,20 @@ fn main()
 	let p = choose_best_sum(331, 2, ts);
 	println!("{}", p);
 }
+
+/*************************************************************************/
+/*************************** Best Solution *******************************/
+/*************************************************************************/
+
+// extern crate itertools;
+// use itertools::Itertools;
+
+// fn choose_best_sum(t: i32, k: i32, ls: &Vec<i32>) -> i32 {
+//     ls
+//         .iter()
+//         .combinations(k as usize)
+//         .map(|comb| comb.into_iter().sum())
+//         .filter(|s| s <= &t)
+//         .max()
+//         .unwrap_or(-1)
+// }
