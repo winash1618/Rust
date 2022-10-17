@@ -6,93 +6,66 @@ fn simple_assembler(program: Vec<&str>) -> HashMap<String, i64> {
     let inc: String = String::from("inc");
     let dec: String = String::from("dec");
     let jnz: String = String::from("jnz");
-	// let mut cont : i64 = 0;
-	// let mut flag = 1;
-	let mut n : i64= 0;
-	// let mut mm = 0;
-	while n < program.len() as i64
-	{
-		// if n > mm
-		// {
-		// 	flag = 1;
-		// }
-		println!("{:?}", registers);
-		let str: Vec<&str> = program[n as usize].split(" ").collect();
-		if str[0].eq(&mov) == true
-		{
-			// println!("i am here");
-			if registers.contains_key(str[2]) == true
-			{
-				if registers.contains_key(str[1]) == true
-				{
-					*registers.get_mut(str[1]).unwrap() = *registers.get(str[2]).unwrap() as i64;
-				}
-				else
-				{
-					registers.insert(str[1].to_string(), *registers.get(str[2]).unwrap() as i64);
-				}
-			}
-			else
-			{
-				if registers.contains_key(str[1]) == true
-				{
-					*registers.get_mut(str[1]).unwrap() = str[2].parse::<i32>().unwrap() as i64;
-				}
-				else
-				{
-					registers.insert(str[1].to_string(), str[2].parse::<i32>().unwrap() as i64);
-				}
-			}
-		}
-		else if str[0].eq(&inc) == true
-		{
-			if registers.contains_key(str[1]) == true
-			{
-				*registers.get_mut(str[1]).unwrap() += 1;
-			}
-		}
-		else if str[0].eq(&dec) == true
-		{
-			if registers.contains_key(str[1]) == true
-			{
-				*registers.get_mut(str[1]).unwrap() -= 1;
-			}
-		}
-		else if str[0].eq(&jnz) == true
-		{
-			// println!("{}", str[1]);
-			if registers.contains_key(str[1]) == true
-			{
-				println!("current {} {}", program[n as usize], n);
-				if *registers.get(str[1]).unwrap() as i64 != 0
-				{
-					n = n + str[2].parse::<i64>().unwrap() as i64  - 1;
-					println!("{} {}", program[n as usize + 1], n + 1);
-				}
-			}
-			// else
-			// {
-			// 	if str[1].parse::<i64>().unwrap() as i64 > 0
-			// 	{
-			// 		if cont == 0 && flag == 1
-			// 		{
-			// 			mm = n;
-			// 			cont = str[1].parse::<i64>().unwrap() as i64;
-			// 			n = n + str[2].parse::<i64>().unwrap() as i64  - 1;
-			// 		}
-			// 	}
-			// 	if cont > 0
-			// 	{
-			// 		flag = 0;
-			// 		cont -= 1;
-			// 		n = n + str[2].parse::<i64>().unwrap() as i64  - 1;
-			// 	}
-			// 	println!("{}", cont);
-			// }
-		}
-		
-		n += 1;
-	}
+    let mut cont : i64 = 0;
+    let mut flag = 1;
+    let mut n : i64= 0;
+    let mut mm = 0;
+    while n < program.len() as i64
+    {
+        if n > mm
+        {
+            flag = 1;
+        }
+        let str: Vec<&str> = program[n as usize].split(" ").collect();
+        if str[0].eq(&mov) == true
+        {
+            if registers.contains_key(str[2]) == true
+            {
+                registers.insert(str[1].to_string(), *registers.get(str[2]).unwrap() as i64);
+            }
+            else
+            {
+                registers.insert(str[1].to_string(), str[2].parse::<i32>().unwrap() as i64);
+            }
+        }
+        else if str[0].eq(&inc) == true
+        {
+                *registers.get_mut(str[1]).unwrap() += 1;
+        }
+        else if str[0].eq(&dec) == true
+        {
+                *registers.get_mut(str[1]).unwrap() -= 1;
+        }
+        else if str[0].eq(&jnz) == true
+        {
+            if registers.contains_key(str[1]) == true
+            {
+                if *registers.get(str[1]).unwrap() as i64 != 0
+                {
+                    n = n + str[2].parse::<i64>().unwrap() as i64  - 1;
+                }
+            }
+            else
+            {
+                if str[1].parse::<i64>().unwrap() as i64 > 0
+                {
+                    if cont == 0 && flag == 1
+                    {
+                        mm = n;
+                        cont = str[1].parse::<i64>().unwrap() as i64;
+                    }
+                }
+                if cont > 0
+                {
+                    flag = 0;
+                    cont -= 1;
+                    n = n + str[2].parse::<i64>().unwrap() as i64  - 1;
+                }
+            }
+        }
+        
+        n += 1;
+    }
     registers
 }
 
@@ -118,3 +91,30 @@ fn main()
 
 	println!("{:?}", simple_assembler(program));
 }
+
+
+/*************************************************************************/
+/*************************** Best Solution *******************************/
+/*************************************************************************/
+
+// use std::collections::HashMap;
+
+// fn simple_assembler(program: Vec<&str>) -> HashMap<String, i64> {
+//     let mut registers = HashMap::new();
+    
+//     let cor = |x: &str, reg: &HashMap<String, i64>| match x.parse::<i64>() { Ok(y) => y, Err(_) => reg[x] };
+    
+//     let mut p = 0;
+//     while let Some(i) = program.get(p) {
+//         let args: Vec<&str> = i.split_whitespace().collect();
+//         match args[0] {
+//             "mov" => { registers.insert(args[1].to_string(), cor(args[2], &registers)); }
+//             "inc" => { *registers.get_mut(args[1]).unwrap() += 1; }
+//             "dec" => { *registers.get_mut(args[1]).unwrap() -= 1; }
+//             "jnz" => { if cor(args[1], &registers) != 0 { p = (p as i64 + cor(args[2], &registers) - 1) as usize; } }
+//             _ => ()
+//         }
+//         p+=1;
+//     }
+//     registers
+// }
