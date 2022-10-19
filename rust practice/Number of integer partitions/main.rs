@@ -1,22 +1,8 @@
 fn partitions(n: u32) -> u32 {
 	let n: i32 = n as i32;
-	// if n == 1 || n == 0
-	// {
-	// 	return 1;
-	// }
-	// let mut sum : i32 = 0;
-	// let vec = vec![1, 1, 2, 3, 5, 7, 11, 15, 22, 30, 42, 56, 77, 101, 135, 176, 231, 297, 385, 490, 627, 792, 1002, 1255, 1575, 1958, 2436, 3010, 3718, 4565, 5604, 6842, 8349, 10143, 12310, 14883, 17977, 21637, 26015, 31185];
-	
 	let mut vec = Vec::new();
 	
 	vec.push(1);
-	// vec.push(1);
-	// if n < 40
-	// {
-	// 	return vec[n as usize];
-	// }
-	// if n > 39
-	// {
 	let mut total = 0;
 	let mut j = 1;
 	while j <= n
@@ -56,31 +42,20 @@ fn partitions(n: u32) -> u32 {
 			{
 				break;
 			}
-			// println!("k = {}", k * (3 * k - 1) / 2);
-			// sum += r * partitions((n - k * (3 * k - 1) / 2) as u32) as i32;
 			v.push(j - k * (3 * k - 1) / 2);
 			ka.push(r);
-			// println!("n = {} sum = {}", n, sum);
 			i += 1;
 		}
-		println!("v = {:?}", v);
 		total = 0;
 		i = 0;
 		while i < v.len() as i32
 		{
-			// println!("i = {}", i);
-			
-				// println!("vec len = {}", vec.len());
-				total += ka[i as usize] * vec[(v[i as usize])  as usize];
+			total += ka[i as usize] * vec[(v[i as usize])  as usize];
 			i += 1;
 		}
 		j += 1;
-		// println!("{:?}", vec);
 		vec.push(total);
-		println!("total = {}", total);
-		println!("{:?}", vec);
 	}
-	// let i : u32 = total;
 	total as u32
 }
 
@@ -190,3 +165,17 @@ fn main()
 
 // https://www.whitman.edu/mathematics/cgt_online/book/section03.03.html
 // https://en.wikipedia.org/wiki/Pentagonal_number_theorem
+
+
+/*************************************************************************/
+/*************************** Best Solution *******************************/
+/*************************************************************************/
+
+fn partitions(n: u32) -> u32 {
+    fn p(k: u32, n: u32) -> u32 {
+        if k > n { 0 }
+        else if k == n { 1 }
+        else { p(k + 1, n) + p(k, n - k) }
+    }
+    p(1, n)
+}
