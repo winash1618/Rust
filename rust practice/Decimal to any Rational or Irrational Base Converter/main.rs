@@ -23,11 +23,12 @@ fn ft_convert(n: f64, decimals: u8, base: f64) -> String
 	let vec = vec!['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'] ;
 	// let power = (10_i32).pow(decimals as u32) as f64;
 	let mut num = n;
+	let mut flag = 0;
 	let mut s = String::new();
 	let mut decimals = decimals;
 	if num < 0.0
 	{
-		s.push('-');
+		flag = 1;
 		num = -1.0 * num;
 	}
 	if num < 1.0
@@ -37,7 +38,16 @@ fn ft_convert(n: f64, decimals: u8, base: f64) -> String
 	while num >= 1.0
 	{
 		let mods : f64;
-		mods = ((num as i64) as f64) % base;
+		if base == 3.141592653589793
+		{
+			mods = num % (base);
+			println!("hi");
+		}
+		else
+		{
+			mods = ((num as i64)as f64) % base;
+		}
+		println!("{} {} {} {}", mods, num, decimals, base);
 		s.push(vec[mods as usize]);
 		if num - mods >= 1.0
 		{
@@ -47,14 +57,18 @@ fn ft_convert(n: f64, decimals: u8, base: f64) -> String
 		{
 			num = num - mods
 		}
-		println!("{} {} {} {}",mods, num, decimals, base);
 		// s = ft_convert((num - mods) / base, decimals, base);
 	}
+	if flag == 1
+	{
+		s.push('-');
+	}
+	s = s.chars().rev().collect::<String>();
+	println!("{} {} {}", num, decimals, base);
 	if decimals > 0
 	{
 		s.push('.');
 	}
-	num = num;
 	while decimals > 0 
 	{
 		let mods : f64;
@@ -62,7 +76,7 @@ fn ft_convert(n: f64, decimals: u8, base: f64) -> String
 		println!("{} {} {} {}",mods, num, decimals, base);
 		s.push(vec[mods as usize]);
 		decimals -= 1;
-		num = (num - (((mods as usize)as f64) / num)) * base;
+		num = mods - ((mods as usize)as f64);
 		// s = ft_convert((num - mods) / base, decimals, base);
 	}
 	// s.push(vec[mods as usize]);
@@ -88,6 +102,7 @@ fn converter(n: f64, decimals: u8, base: f64) -> String {
 fn main()
 {
 	converter(13.0, 0, std::f64::consts::PI);
-	// converter(13.5, 4, 16.0);
-	// converter(0.0, 4, 26.0);
+	converter(13.0, 4, 2.0);
+	converter(-15.5, 2, 23.0);
+	converter(13.0, 0, 10.0);
 }
